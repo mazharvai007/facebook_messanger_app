@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import './App.css';
 import Message from './Components/Message/Message';
@@ -6,13 +6,19 @@ import Message from './Components/Message/Message';
 function App() {
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([
-		'Hi',
-		'How are you?',
-		'What are you doing now?',
+		{ userName: 'Mazhar', text: 'Hi' },
+		{ userName: 'Bristy', text: 'How are you?' },
+		{ userName: 'Abdullah', text: 'What are you doing now?' },
 	]);
+	const [userName, setUserName] = useState('');
 
-	console.log(input);
-	console.log(messages);
+	useEffect(() => {
+		// Get username from user
+		// const name = prompt('Please enter your name...');
+		// setUserName(name);
+		setUserName(prompt('Please enter your name...'));
+	}, []);
+	console.log(userName);
 
 	const sendMessages = (event) => {
 		// Stop refreshing
@@ -23,7 +29,7 @@ function App() {
 		 */
 
 		// When user send message that will stored to messages and set them as an array. It is working like array.push
-		setMessages([...messages, input]);
+		setMessages([...messages, { userName: userName, text: input }]);
 
 		// After sending message the write message field will be empty
 		setInput('');
@@ -52,7 +58,7 @@ function App() {
 			</form>
 
 			{messages.map((message) => (
-				<Message text={message} />
+				<Message userName={message.userName} text={message.text} />
 			))}
 		</div>
 	);

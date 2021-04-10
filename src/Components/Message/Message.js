@@ -3,7 +3,7 @@ import React from 'react';
 function Message(props) {
 	return (
 		<div>
-			<p>{props.text}</p>
+			<p>{props.userName + ':' + props.text}</p>
 		</div>
 	);
 }
