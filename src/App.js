@@ -6,19 +6,18 @@ import Message from './Components/Message/Message';
 function App() {
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([
-		{ userName: 'Mazhar', text: 'Hi' },
-		{ userName: 'Bristy', text: 'How are you?' },
-		{ userName: 'Abdullah', text: 'What are you doing now?' },
+		{ username: 'Mazhar', text: 'Hi' },
+		{ username: 'Bristy', text: 'How are you?' },
+		{ username: 'Abdullah', text: 'What are you doing now?' },
 	]);
-	const [userName, setUserName] = useState('');
+	const [username, setUsername] = useState('');
 
 	useEffect(() => {
 		// Get username from user
 		// const name = prompt('Please enter your name...');
 		// setUserName(name);
-		setUserName(prompt('Please enter your name...'));
+		setUsername(prompt('Please enter your name...'));
 	}, []);
-	console.log(userName);
 
 	const sendMessages = (event) => {
 		// Stop refreshing
@@ -29,7 +28,7 @@ function App() {
 		 */
 
 		// When user send message that will stored to messages and set them as an array. It is working like array.push
-		setMessages([...messages, { userName: userName, text: input }]);
+		setMessages([...messages, { username: username, text: input }]);
 
 		// After sending message the write message field will be empty
 		setInput('');
@@ -38,6 +37,7 @@ function App() {
 	return (
 		<div className='App'>
 			<h1>Facebook Messanger App</h1>
+			<h3>Welcome {username}</h3>
 			<form>
 				<FormControl>
 					<InputLabel>Enter your message...</InputLabel>
@@ -58,7 +58,7 @@ function App() {
 			</form>
 
 			{messages.map((message) => (
-				<Message userName={message.userName} text={message.text} />
+				<Message username={username} message={message} />
 			))}
 		</div>
 	);
