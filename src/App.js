@@ -2,16 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import './App.css';
 import Message from './Components/Message/Message';
+import db from './firebase';
 
 function App() {
 	const [input, setInput] = useState('');
-	const [messages, setMessages] = useState([
-		{ username: 'Mazhar', text: 'Hi' },
-		{ username: 'Bristy', text: 'How are you?' },
-		{ username: 'Abdullah', text: 'What are you doing now?' },
-	]);
+	const [messages, setMessages] = useState([]);
 	const [username, setUsername] = useState('');
 
+	/**
+	 * Get data from FireStore
+	 */
+	useEffect(() => {
+		// The code will run when the app component loads
+		db.collection('messages').onSnapshot((snapshot) => {
+			setMessages(snapshot.docs.map((doc) => doc.data()));
+		});
+	}, []);
+
+	/**
+	 * Get Username
+	 */
 	useEffect(() => {
 		// Get username from user
 		// const name = prompt('Please enter your name...');
@@ -28,7 +38,7 @@ function App() {
 		 */
 
 		// When user send message that will stored to messages and set them as an array. It is working like array.push
-		setMessages([...messages, { username: username, text: input }]);
+		setMessages([...messages, { username: username, message: input }]);
 
 		// After sending message the write message field will be empty
 		setInput('');
