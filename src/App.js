@@ -3,6 +3,7 @@ import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import './App.css';
 import Message from './Components/Message/Message';
 import db from './firebase';
+import firebase from 'firebase';
 
 function App() {
 	const [input, setInput] = useState('');
@@ -14,9 +15,11 @@ function App() {
 	 */
 	useEffect(() => {
 		// The code will run when the app component loads
-		db.collection('messages').onSnapshot((snapshot) => {
-			setMessages(snapshot.docs.map((doc) => doc.data()));
-		});
+		db.collection('messages')
+			.orderBy('timestamp', 'desc')
+			.onSnapshot((snapshot) => {
+				setMessages(snapshot.docs.map((doc) => doc.data()));
+			});
 	}, []);
 
 	/**
@@ -38,7 +41,14 @@ function App() {
 		 */
 
 		// When user send message that will stored to messages and set them as an array. It is working like array.push
-		setMessages([...messages, { username: username, message: input }]);
+		// setMessages([...messages, { username: username, message: input }]);
+
+		// Store messages on Firebase
+		db.collection('messages').add({
+			messages: input,
+			username: username,
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+		});
 
 		// After sending message the write message field will be empty
 		setInput('');

@@ -11,7 +11,7 @@ function Message({ message, username }) {
 				className={isUser ? 'message__userCard' : 'message__guestCard'}>
 				<CardContent>
 					<Typography variant='h5' component='p'>
-						{message.username} : {message.message}
+						{message.username} : {message.messages}
 					</Typography>
 				</CardContent>
 			</Card>

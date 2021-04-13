@@ -5,11 +5,13 @@
 }
 .message__user {
 	margin-left: auto;
-	color: white;
 	text-align: left;
 }
 .message__userCard {
 	background-color: #0b81ff !important;
+}
+.message__userCard p {
+	color: white;
 }
 .message__guestCard {
 	background-color: #e9e9eb !important;
